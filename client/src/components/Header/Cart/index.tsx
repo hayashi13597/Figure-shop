@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import bxCart from "../../../assets/images/bx-cart.svg";
 import CartItem from "./CartItem";
+import { selectCartItems } from "./cartSlice";
+import { useSelector } from "react-redux";
+import formatter from "../../../utils/formatter";
 
 interface IData {
   id: number;
@@ -14,31 +17,22 @@ interface IData {
   quantity: number;
 }
 
-const Cart = () => {
-  const [showCart, setShowCart] = useState(false);
-  const [cartItem, setCartItem] = useState<IData[]>([]);
+const Cart: React.FC<{ showCart: boolean; handleShowCart: () => void }> = ({
+  showCart,
+  handleShowCart,
+}) => {
+  const cartItems: IData[] = useSelector(selectCartItems);
 
-  useEffect(() => {
-    const localStorageItem = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    ) as IData[];
-    setCartItem(localStorageItem);
-  }, []);
-
-  const hanldeShowCart = () => {
-    setShowCart(!showCart);
-  };
-
-  const total = cartItem.reduce((accumulator, item) => {
+  const total = cartItems.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
   }, 0);
 
   return (
     <div className={`header__cart ${showCart ? "js-action-show" : ""}`}>
-      <div className="header__cart--text" onClick={hanldeShowCart}>
+      <div className="header__cart--text" onClick={handleShowCart}>
         <div className="cart__icon">
           <img src={bxCart} />
-          <span className="cart__number">{cartItem.length}</span>
+          <span className="cart__number">{cartItems.length}</span>
         </div>
         <div className="cart__text">Giỏ hàng</div>
       </div>
@@ -50,8 +44,8 @@ const Cart = () => {
             <div className="cart-view-scroll">
               <table>
                 <tbody id="mini-cart">
-                  {cartItem.length > 0 ? (
-                    cartItem.map((item) => (
+                  {cartItems.length > 0 ? (
+                    cartItems.map((item: IData) => (
                       <CartItem props={item} key={item.id} />
                     ))
                   ) : (
@@ -87,7 +81,7 @@ const Cart = () => {
                   <tr>
                     <td className="mnc-total text-left">TỔNG TIỀN:</td>
                     <td className="mnc-total text-right" id="total-view-cart">
-                      {total}đ
+                      {formatter.format(total)}đ
                     </td>
                   </tr>
                   <tr className="mini-cart__button">

@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import _ from "lodash";
 import axios from "axios";
 import RowItem from "./RowItem";
+import { useDispatch } from "react-redux";
+import { addToCart, removeItem } from "../Header/Cart/cartSlice";
+import { useStore } from "react-redux";
+import { persistStore } from "redux-persist";
 
 interface Data {
   id: number;
@@ -16,36 +20,19 @@ interface Data {
 
 const OrderItem = ({ props }: any) => {
   const { title, description, bannerImage, position, show } = props;
+
   const [data, setData] = useState<Data[]>([]);
-  const [itemCart, setItemCart] = useState<Data[]>([]);
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  const handleAddToCartRedux = (cart: Data) => {
+    dispatch(addToCart(cart));
+    persistStore(store).flush();
+  };
 
   useEffect(() => {
-    const localStorageItem = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    ) as Data[];
-    setItemCart(localStorageItem);
-  }, []);
-
-  const handleAddToCart = (cart: Data) => {
-    const existingItem = itemCart.find((item) => item.id === cart.id);
-    if (existingItem) {
-      const updatedCart = itemCart.map((cartItem) => {
-        if (cartItem.id === cart.id) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          };
-        }
-        return cartItem;
-      });
-      setItemCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    } else {
-      const updatedCart = [...itemCart, cart];
-      setItemCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
-  };
+    persistStore(store).flush();
+  }, [store]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +67,7 @@ const OrderItem = ({ props }: any) => {
                 <RowItem
                   props={item}
                   key={item.id}
-                  onHanldAddCart={handleAddToCart}
+                  onHanldAddCart={handleAddToCartRedux}
                 />
               ))}
             </div>

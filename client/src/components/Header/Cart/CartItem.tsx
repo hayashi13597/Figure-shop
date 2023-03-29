@@ -1,4 +1,8 @@
 import React from "react";
+import formatter from "../../../utils/formatter";
+import { AiOutlineClose } from "react-icons/ai";
+import { removeItem } from "./cartSlice";
+import { useDispatch } from "react-redux";
 
 interface IData {
   id: number;
@@ -13,6 +17,13 @@ interface IData {
 
 const CartItem: React.FC<{ props: IData }> = ({ props }) => {
   const { id, image, name, price, quantity } = props;
+
+  const dispatch = useDispatch();
+
+  const handleRemoveItem = () => {
+    dispatch(removeItem(props));
+  };
+
   return (
     <tr className="mini-cart__item">
       <td className="mini-cart__left">
@@ -28,12 +39,13 @@ const CartItem: React.FC<{ props: IData }> = ({ props }) => {
           <span className="mnc-value">{quantity}</span>
         </div>
         <div className="mini-cart__price">
-          <span className="mnc-price">{price}đ</span>
+          <span className="mnc-price">{formatter.format(price)}đ</span>
         </div>
-        <div className="mini-cart__remove">
-          <a href="#">
-            <i className="fa-solid fa-xmark"></i>
-          </a>
+        <div
+          className="mini-cart__remove cursor-pointer"
+          onClick={handleRemoveItem}
+        >
+          <AiOutlineClose />
         </div>
       </td>
     </tr>

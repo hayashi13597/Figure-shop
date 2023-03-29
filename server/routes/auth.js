@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const User = require("../models/User");
 const verifyToken = require('../middleware/auth');
-
 const userController = require('../controller/userController');
-
 const connectDB = require('../config/connectDB');
 connectDB();
 
@@ -13,7 +10,6 @@ connectDB();
 // @desc Check if user is logged in
 // @access public
 router.get('/', verifyToken, userController.loggedIn)
-
 
 // @Route POST /api/auth/register
 // @desc Register user

@@ -3,15 +3,21 @@ require("dotenv").config();
 const cors = require("cors");
 
 const authRouter = require("./routes/auth");
+const productApi = require("./routes/productApi");
+const categoryApi = require("./routes/categoryApi");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// API auth router
 app.use("/api/auth", authRouter);
+// API product router
+productApi(app)
+categoryApi(app);
 
-const PORT = 5000;
+const port = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`server listening on ${PORT}`);
+app.listen(port, () => {
+  console.log(`server listening on ${port}`);
 });

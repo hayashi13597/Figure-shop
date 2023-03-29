@@ -3,13 +3,10 @@ import { Link } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
 import bxUser from "../../../assets/images/bx-user.svg";
 
-const LoginComponent = () => {
-    const [showLogin, setshowLogin] = useState(false);
-    
-  const handleShowLogin = () => {
-    setshowLogin(!showLogin);
-  };
-
+const LoginComponent: React.FC<{
+  showLogin: boolean;
+  handleShowLogin: () => void;
+}> = ({ showLogin, handleShowLogin }) => {
   return (
     <div className={`header__account ${showLogin ? "js-action-show" : ""}`}>
       <div className="box-account" onClick={handleShowLogin}>

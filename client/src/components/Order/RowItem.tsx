@@ -1,4 +1,5 @@
 import { BsCart3 } from "react-icons/bs";
+import formatter from "../../utils/formatter";
 
 interface Data {
   id: number;
@@ -32,7 +33,7 @@ const RowItem: React.FC<{
           </a>
         </h3>
         <p className="item-detail__price" id="product-price">
-          {props.price}đ
+          {formatter.format(props.price)}đ
         </p>
       </div>
       <div className="item-action">

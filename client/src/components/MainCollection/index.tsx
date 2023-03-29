@@ -4,6 +4,8 @@ import RowItem from "../Order/RowItem";
 import Pagination from "../Pagination";
 import CollectionFilter from "./CollectionFilter";
 import CollectionSoftly from "./CollectionSoftly";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../Header/Cart/cartSlice";
 
 interface Data {
   id: number;
@@ -22,7 +24,6 @@ const MainCollection = () => {
   const [data, setData] = useState<Data[]>([]);
   const [sortOption, setSortOption] = useState<string>("");
   const [sortByBrand, setSortByBrand] = useState<string[]>([]);
-  const [itemCart, setItemCart] = useState<Data[]>([]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -36,32 +37,9 @@ const MainCollection = () => {
     setSortByBrand(option);
   };
 
-  useEffect(() => {
-    const localStorageItem = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    ) as Data[];
-    setItemCart(localStorageItem);
-  }, []);
-
-  const handleAddToCart = (cart: Data) => {
-    const existingItem = itemCart.find((item) => item.id === cart.id);
-    if (existingItem) {
-      const updatedCart = itemCart.map((cartItem) => {
-        if (cartItem.id === cart.id) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          };
-        }
-        return cartItem;
-      });
-      setItemCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    } else {
-      const updatedCart = [...itemCart, cart];
-      setItemCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
+  const dispatch = useDispatch();
+  const handleAddToCartRedux = (cart: Data) => {
+    dispatch(addToCart(cart));
   };
 
   useEffect(() => {
@@ -71,18 +49,12 @@ const MainCollection = () => {
       );
       let sortedData: Data[] = res.data;
       if (sortOption === "asc") {
-        sortedData.sort((a: { price: string }, b: { price: string }) => {
-          return (
-            parseInt(a.price.split(",").join("")) -
-            parseInt(b.price.split(",").join(""))
-          );
+        sortedData.sort((a: { price: number }, b: { price: number }) => {
+          return a.price - b.price;
         });
       } else if (sortOption === "desc") {
-        sortedData.sort((a: { price: string }, b: { price: string }) => {
-          return (
-            parseInt(b.price.split(",").join("")) -
-            parseInt(a.price.split(",").join(""))
-          );
+        sortedData.sort((a: { price: number }, b: { price: number }) => {
+          return b.price - a.price;
         });
       } else if (sortOption === "atoz") {
         sortedData.sort((a: { name: string }, b: { name: string }) => {
@@ -141,7 +113,7 @@ const MainCollection = () => {
               {currentItems.map((item) => (
                 <RowItem
                   props={item}
-                  onHanldAddCart={handleAddToCart}
+                  onHanldAddCart={handleAddToCartRedux}
                   key={item.id}
                 />
               ))}
