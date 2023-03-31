@@ -31,16 +31,10 @@ const getACategory = async (req, res) => {
 
 const createNewCategory = async (req, res) => {
   const { name } = req.body;
-  if (!name) {
-    return res.status(400).json({
-      success: false,
-      message: "name is required",
-    });
-  }
   try {
     const newCategory = new Category({ name })
     await newCategory.save();
-    res.json({ success: true, message: "Add Category successfully", category: newCategory });
+    res.json({ success: true, message: "Thêm danh mục thành công", category: newCategory });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -68,7 +62,7 @@ const updateCategory = async (req, res) => {
     }
     res.json({
       success: true,
-      message: "Product updated successfully",
+      message: "Cập nhật danh mục thành công",
       updatedCategory
     })
   } catch (error) {
@@ -88,7 +82,8 @@ const deleteCategory = async (req, res) => {
     }
     res.json({
       success: true,
-      message: "Product deleted successfully"
+      message: "Xóa danh mục thành công",
+      deletedCategory
     })
   } catch (error) {
     console.log(error);

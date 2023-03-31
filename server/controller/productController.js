@@ -2,7 +2,7 @@ const Product = require("../models/Product");
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate('categoryId', ['name']);
     res.json({
       success: true,
       message: 'Get all Products successfully',
@@ -30,8 +30,8 @@ const getAProduct = async (req, res) => {
 }
 
 const createNewProduct = async (req, res) => {
-  const { name, categoryId, image, price, amount, quantity } = req.body;
-  if (!name || !image || !price || !amount || !quantity) {
+  const { name, categoryId, price, amount, image } = req.body;
+  if (!name || !price || !amount) {
     return res.status(400).json({
       success: false,
       message: "All field is required",
@@ -39,10 +39,10 @@ const createNewProduct = async (req, res) => {
   }
   try {
     const newProduct = new Product({
-      name, categoryId, image, price, amount, quantity
+      name, categoryId, image, price, amount
     })
     await newProduct.save();
-    res.json({ success: true, message: "Add Product successfully", product: newProduct });
+    res.json({ success: true, message: "Thêm sản phẩm thành công", product: newProduct });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -50,16 +50,10 @@ const createNewProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-  const { name, image, price, amount, quantity } = req.body;
-  if (!name || !image || !price || !amount || !quantity) {
-    return res.status(400).json({
-      success: false,
-      message: "All field is required",
-    });
-  }
+  const { name, image, categoryId, price, amount } = req.body;
   try {
     let updatedProduct = {
-      name, image, price, amount, quantity
+      name, image, price, amount, categoryId
     }
     updatedProduct = await Product.findByIdAndUpdate(req.params.id, updatedProduct, { new: true })
     if (!updatedProduct) {
@@ -70,7 +64,7 @@ const updateProduct = async (req, res) => {
     }
     res.json({
       success: true,
-      message: "Product updated successfully",
+      message: "Sửa sản phẩm thành công",
       updatedProduct
     })
   } catch (error) {
@@ -90,7 +84,7 @@ const deleteProduct = async (req, res) => {
     }
     res.json({
       success: true,
-      message: "Product deleted successfully",
+      message: "Xóa sản phẩm thành công",
       deletedProduct
     })
   } catch (error) {

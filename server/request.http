@@ -31,24 +31,22 @@ Content-Type: application/json
     "image": ["scale-20.jpg", "scale-20-1.jpg"],
     "name": "test",
     "price": 7750000,
-    "amount": 99,
-    "quantity": 1
+    "amount": 99
   }
 
 ###
-PUT http://localhost:5000/api/products/64246c99ae43281cb255593c
+PUT http://localhost:5000/api/products/64259ab3a61888100795b0af
 Content-Type: application/json
 
 {
   "image": ["order-19-1.jpg"],
   "name": "Final Fantasy VII Remake Adorable Arts Aerith Gainsborough",
   "price": 2150052,
-  "amount": 99,
-  "quantity": 1
+  "amount": 89
 }
 
 ###
-DELETE http://localhost:5000/api/products/64246c99ae43281cb255593c
+DELETE http://localhost:5000/api/products/64259ab3a61888100795b0af
 
 
 ### Get all categories

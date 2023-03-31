@@ -1,0 +1,25 @@
+.pagination {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination .pagination-node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.pagination .pagination-node .page-node {
+  text-decoration: none;
+  color: #252a2b;
+  display: inline-block;
+  margin: 20px 2px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 2px 6px;
+  opacity: 0.4;
+}
+.pagination .pagination-node .current {
+  opacity: 1;
+}
