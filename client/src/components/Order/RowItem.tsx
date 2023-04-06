@@ -1,10 +1,15 @@
 import { BsCart3 } from "react-icons/bs";
 import formatter from "../../utils/formatter";
+import React from "react";
+import { Link } from "react-router-dom";
 
 interface Data {
-  id: number;
-  category: string;
-  image: string[];
+  _id: number;
+  categoryId: {
+    name: string;
+    _id: string;
+  };
+  image: string;
   name: string;
   price: number;
   createdAt: string;
@@ -19,18 +24,18 @@ const RowItem: React.FC<{
   return (
     <div className="row-item">
       <div className="item-img">
-        <a className="nothover" href="#">
-          <img src={`/src/assets/images/${props.image[0]}`} alt="" />
-        </a>
-        <a className="whenhover" href="#">
-          <img src={`/src/assets/images/${props.image[1]}`} alt="" />
-        </a>
+        <Link className="nothover" to={`/detail/${props._id}`}>
+          <img src={props.image} />
+        </Link>
+        <Link className="whenhover" to={`/detail/${props._id}`}>
+          <img src={props.image} />
+        </Link>
       </div>
       <div className="item-detail">
         <h3>
-          <a href="" id="product-name">
+          <Link to={`/detail/${props._id}`} id="product-name">
             {props.name}
-          </a>
+          </Link>
         </h3>
         <p className="item-detail__price" id="product-price">
           {formatter.format(props.price)}đ

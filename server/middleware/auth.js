@@ -6,13 +6,13 @@ const verifyToken = (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token)
-    return res.status(401).json({
+    return res.json({
       success: false,
       message: "Access token not found",
     });
 
   try {
-    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, Math.round(Math.random()));
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     req.userId = decodedToken.userId;
     next();

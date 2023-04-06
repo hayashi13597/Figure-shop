@@ -1,3 +1,4 @@
+import React from "react";
 import services1 from "../../assets/images/service-1.jpg";
 import services2 from "../../assets/images/service-2.jpg";
 import services3 from "../../assets/images/service-3.jpg";

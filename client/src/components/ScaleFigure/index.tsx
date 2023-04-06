@@ -1,26 +1,27 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import ColItem from "./ColItem";
+import axios from "axios";
 
-interface Data {
-  id: number;
+interface IData {
+  _id: number;
   category: string;
-  image: string[];
+  image: string;
   name: string;
   price: number;
   createdAt: string;
-  Amount: number;
+  quantity: number;
 }
 
 const ScaleFigure = () => {
-  const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState < IData[] > ([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(
-        "http://localhost:5173/src/assets/json/data.json"
-      ).then((res) => res.json());
-      setData(res);
+      const res = await axios.get(
+        "http://localhost:5000/api/products/"
+      );
+      setData(res.data.products);
     };
     fetchData();
   }, []);
@@ -39,7 +40,7 @@ const ScaleFigure = () => {
           {chunkedData.map((items, index) => (
             <div className="product-col" key={index}>
               {items.map((item, index) => (
-                <ColItem {...item} key={index} />
+                <ColItem props={item} key={index} />
               ))}
             </div>
           ))}

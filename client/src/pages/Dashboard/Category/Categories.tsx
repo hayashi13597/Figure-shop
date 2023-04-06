@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DataTime from "../DataTime";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CateTable from "./CateTable";
 import { Modal } from "flowbite-react";
 import { Button, Label, TextInput } from "flowbite-react/lib/esm/components";
@@ -8,17 +8,29 @@ import { ModalHeader } from "flowbite-react/lib/esm/components/Modal/ModalHeader
 import { ModalBody } from "flowbite-react/lib/esm/components/Modal/ModalBody";
 import { addCategory } from "./CategorySlice";
 import * as Toastify from "../../../utils/toastify";
+import { useNavigate } from "react-router-dom";
+import { loadUser } from "../../../slice/authSlice";
 
 const Categories = () => {
   const title: string = "Quản lý danh mục";
   const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef < HTMLInputElement > (null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.authLogin.user);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [])
+
+  if (!user || user?.isAdmin === false) {
+    navigate('/')
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const value = inputRef.current?.value;
-    console.log(value);
+
     dispatch(addCategory({ name: value })).then(() =>
       Toastify.successNotify("Thêm danh mục thành công")
     );

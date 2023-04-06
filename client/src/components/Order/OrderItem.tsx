@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import axios from "axios";
 import RowItem from "./RowItem";
@@ -7,10 +7,13 @@ import { addToCart, removeItem } from "../Header/Cart/cartSlice";
 import { useStore } from "react-redux";
 import { persistStore } from "redux-persist";
 
-interface Data {
-  id: number;
-  category: string;
-  image: string[];
+interface IData {
+  _id: number;
+  categoryId: {
+    name: string;
+    _id: string;
+  };
+  image: string;
   name: string;
   price: number;
   createdAt: string;
@@ -21,12 +24,12 @@ interface Data {
 const OrderItem = ({ props }: any) => {
   const { title, description, bannerImage, position, show } = props;
 
-  const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState < IData[] > ([]);
   const dispatch = useDispatch();
   const store = useStore();
 
-  const handleAddToCartRedux = (cart: Data) => {
-    dispatch(addToCart(cart));
+  const handleAddToCartRedux = (cart: IData) => {
+    dispatch(addToCart({cart, quantity:1}));
     persistStore(store).flush();
   };
 
@@ -37,9 +40,9 @@ const OrderItem = ({ props }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        "http://localhost:5173/src/assets/json/data.json"
+        "http://localhost:5000/api/products/"
       );
-      setData(res.data);
+      setData(res.data.products);
     };
     fetchData();
   }, []);
@@ -63,10 +66,10 @@ const OrderItem = ({ props }: any) => {
         <div className="orders-content__products" id="product-orders">
           {chunkedData.slice(show[0], show[1]).map((data, index) => (
             <div className="product-row" key={index}>
-              {data.map((item) => (
+              {data.map((item, index) => (
                 <RowItem
                   props={item}
-                  key={item.id}
+                  key={index}
                   onHanldAddCart={handleAddToCartRedux}
                 />
               ))}

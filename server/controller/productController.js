@@ -16,7 +16,7 @@ const getAllProducts = async (req, res) => {
 
 const getAProduct = async (req, res) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id });
+    const product = await Product.findOne({ _id: req.params.id }).populate('categoryId');
     if (!product) return res.status(404).json({ success: false, message: "Book not found" });
     res.json({
       success: true,

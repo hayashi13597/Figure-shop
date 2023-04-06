@@ -190,11 +190,7 @@ th {
   align-items: center;
   gap: 10px;
 }
-.header-middle__action .header__account .box-account .account__icon img {
-  width: 120%;
-  height: 120%;
-  object-fit: cover;
-}
+
 .header-middle__action .header__account .box-account .account__text .text-up {
   font-size: 13px;
 }

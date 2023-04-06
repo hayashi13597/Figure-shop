@@ -21,4 +21,8 @@ router.post("/register", userController.registerUser);
 // @access public
 router.post('/login', userController.login);
 
+router.post('/logout', userController.logout);
+router.get('/users', userController.getAllUsers);
+router.delete('/users/:id', userController.deleteUser);
+
 module.exports = router;

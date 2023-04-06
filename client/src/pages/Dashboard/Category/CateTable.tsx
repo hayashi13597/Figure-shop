@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PaginationDash from "../PaginationDash";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -18,7 +18,7 @@ const CateTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [getCategories, setGetCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [selectedCategory, setSelectedCategory] = useState < any > (null);
   const categories = useSelector((state: any) => state.category.categories);
   const dispatch = useDispatch();
   useEffect(() => {

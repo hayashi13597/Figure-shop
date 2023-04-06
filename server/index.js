@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth");
 const productApi = require("./routes/productApi");
 const categoryApi = require("./routes/categoryApi");
+const orderApi = require("./routes/orderApi");
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use("/api/auth", authRouter);
 // API product router
 productApi(app)
 categoryApi(app);
+orderApi(app);
 
 const port = process.env.PORT || 5000;
 

@@ -1,3 +1,4 @@
+import React from "react";
 import sectionIcon1 from "../../assets/images/section-icon-1.jpg";
 import sectionIcon2 from "../../assets/images/section-icon-2.jpg";
 import { BiChevronRight } from "react-icons/bi";

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTime from "../DataTime";
 import { Modal } from "flowbite-react";
 import {
@@ -9,17 +9,29 @@ import {
 } from "flowbite-react/lib/esm/components";
 import { ModalBody } from "flowbite-react/lib/esm/components/Modal/ModalBody";
 import { ModalHeader } from "flowbite-react/lib/esm/components/Modal/ModalHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductToDB } from "./productSlice";
 import axios from "axios";
 import TableItem from "./TableItem";
 import * as Toastify from "../../../utils/toastify";
+import { useNavigate } from "react-router-dom";
+import { loadUser } from "../../../slice/authSlice";
 
 const Product = () => {
   const title: string = "Quản lý sản phẩm";
   const [isOpen, setIsOpen] = useState(false);
   const [getCategories, setGetCategories] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.authLogin.user);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [])
+
+  if (!user || user?.isAdmin === false) {
+    navigate('/')
+  }
 
   useEffect(() => {
     const getCategory = async () => {

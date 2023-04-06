@@ -185,11 +185,7 @@ th {
   align-items: center;
   gap: 10px;
 }
-.header-middle__action .header__account .box-account .account__icon img {
-  width: 120%;
-  height: 120%;
-  object-fit: cover;
-}
+
 .header-middle__action .header__account .box-account .account__text .text-up {
   font-size: 13px;
 }
@@ -299,6 +295,14 @@ th {
   .box-login__inner
   .form-input
   .form-field:focus
+  + .form-label {
+  transform: translateY(-5px) scale(0.8);
+}
+.header-middle__action
+  .header__account
+  .box-login__inner
+  .form-input
+  .form-field:not(:placeholder-shown)
   + .form-label {
   transform: translateY(-5px) scale(0.8);
 }

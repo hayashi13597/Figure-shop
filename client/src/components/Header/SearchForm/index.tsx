@@ -1,23 +1,27 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BiSearch } from "react-icons/bi";
 import SearchItem from "../SearchItem";
 import NoneItem from "../SearchItem/NoneItem";
 
 interface searchResult {
-  id: number;
-  image: string[];
-  category: string;
+  _id: number;
+  categoryId: {
+    name: string;
+    _id: string;
+  };
+  image: string;
   name: string;
-  price: string;
+  price: number;
   createdAt: string;
   amount: number;
+  quantity: number;
 }
 
 const SearchForm = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [data, setData] = useState<searchResult[]>([]);
-  const [searchResults, setSearchResults] = useState<searchResult[]>([]);
+  const [data, setData] = useState < searchResult[] > ([]);
+  const [searchResults, setSearchResults] = useState < searchResult[] > ([]);
 
   const handleInputChange = (event: { target: { value: string } }) => {
     setSearchTerm(event.target.value);
@@ -37,9 +41,9 @@ const SearchForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        "http://localhost:5173/src/assets/json/data.json"
+        "http://localhost:5000/api/products"
       );
-      setData(res.data);
+      setData(res.data.products);
     };
     fetchData();
   }, []);

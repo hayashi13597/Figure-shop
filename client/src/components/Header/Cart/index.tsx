@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import bxCart from "../../../assets/images/bx-cart.svg";
 import CartItem from "./CartItem";
@@ -7,9 +7,12 @@ import { useSelector } from "react-redux";
 import formatter from "../../../utils/formatter";
 
 interface IData {
-  id: number;
-  category: string;
-  image: string[];
+  _id: number;
+  categoryId: {
+    name: string;
+    _id: string;
+  };
+  image: string;
   name: string;
   price: number;
   createdAt: string;
@@ -46,7 +49,7 @@ const Cart: React.FC<{ showCart: boolean; handleShowCart: () => void }> = ({
                 <tbody id="mini-cart">
                   {cartItems.length > 0 ? (
                     cartItems.map((item: IData) => (
-                      <CartItem props={item} key={item.id} />
+                      <CartItem props={item} key={item._id} />
                     ))
                   ) : (
                     <tr className="mini-cart__empty">
@@ -86,7 +89,7 @@ const Cart: React.FC<{ showCart: boolean; handleShowCart: () => void }> = ({
                   </tr>
                   <tr className="mini-cart__button">
                     <td>
-                      <Link to="cart.html" className="linktocart button">
+                      <Link to="/cart" className="linktocart button">
                         Xem giỏ hàng
                       </Link>
                     </td>

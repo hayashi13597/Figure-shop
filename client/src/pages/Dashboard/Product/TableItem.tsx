@@ -1,11 +1,11 @@
 import { Table } from "flowbite-react";
-import { useState, useEffect } from "react";
-import PaginationDash from "../PaginationDash";
+import React, { useState, useEffect } from "react";
 import ModalItem from "./ModalItem";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { deleteProduct } from "./productSlice";
 import * as Toastify from "../../../utils/toastify";
+import { Pagination } from "@mui/material";
 
 interface IProduct {
   _id: Number;
@@ -24,7 +24,7 @@ const PRODUCTS_PER_PAGE = 3;
 const TableItem = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState < any > (null);
   const [getProduct, setGetProduct] = useState([]);
   const products = useSelector((state: any) => state.product.products);
   const dispatch = useDispatch();
@@ -37,10 +37,6 @@ const TableItem = () => {
     };
     fetchProducts();
   }, [products]);
-
-  const onPageChange = (page: number) => {
-    setCurrentPage(page);
-  };
 
   const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const end = start + PRODUCTS_PER_PAGE;
@@ -63,14 +59,13 @@ const TableItem = () => {
   const handleCloseModal = () => {
     setShowModal(!showModal);
   };
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  };
 
   return (
     <div>
-      <PaginationDash
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-      />
+      <Pagination count={totalPages} page={currentPage} onChange={handleChange} className="flex justify-center mb-5" color="primary" />
       <Table>
         <Table.Head>
           <Table.HeadCell>Tên SP</Table.HeadCell>

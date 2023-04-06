@@ -1,10 +1,35 @@
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { ToastContainer } from "react-toastify";
 import { BsFillDatabaseFill } from "react-icons/bs";
+import { loadUser } from "../../slice/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutAsync } from "../../components/Header/Login/loginSlice";
+import * as Toastify from '../../utils/toastify';
+import { FaReceipt } from "react-icons/fa";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: any) => state.authLogin.user);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [])
+
+  if (user?.isAdmin === false) {
+    navigate('/')
+  }
+
+  const handleLogout = () => {
+    dispatch(logoutAsync()).then(() => {
+      Toastify.successNotify("logout successfully")
+      dispatch(loadUser());
+    });
+  }
+
   return (
     <>
       <ToastContainer />
@@ -84,6 +109,10 @@ const Dashboard = () => {
                 <BsFillDatabaseFill className="text-xl" />
                 <span>Quản lý danh mục</span>
               </Link>
+              <Link to="orders" className="dash-link flex items-center">
+                <FaReceipt className="text-xl"/>
+                <span>Quản lý hóa đơn</span>
+              </Link>
               <Link to="users" className="dash-link">
                 <svg
                   className="w-6 h-6 fill-current inline-block"
@@ -100,7 +129,7 @@ const Dashboard = () => {
         </div>
         <div className="w-full bg-slate-200">
           <div className="w-full h-14 bg-[#D9D9D9] flex items-center justify-end">
-            <Link to="">
+            <Link to="/" onClick={handleLogout}>
               <FiLogOut className="text-5xl bg-slate-500 p-3 mr-10 hover:bg-[#242526] hover:text-white transition duration-150 ease-in-out" />
             </Link>
           </div>

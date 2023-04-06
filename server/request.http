@@ -2,7 +2,7 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "username":"admin",
+  "email":"admin1@gmail.com",
   "password":"123"
 }
 
@@ -11,10 +11,11 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username":"admin",
+  "email":"admin@gmail.com",
   "password":"123"
 }
-
+###
+GET http://localhost:5000/api/auth/users
 
 ### Product API
 GET http://localhost:5000/api/products/
@@ -73,3 +74,40 @@ GET http://localhost:5000/api/categories/6424646ceef0f4e1ae6395a8
 
 ###
 DELETE http://localhost:5000/api/categories/6424646ceef0f4e1ae6395a8
+
+
+###
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+  "userId":"642b1a295d7254ca6a19e91f",
+  "productId":["64246a3e588b4733b4778ee3"],
+  "paypalPayment": {
+    "name":"123"
+  }
+}
+
+
+###
+GET http://localhost:5000/api/orders
+###
+GET http://localhost:5000/api/orders/642edd1e7c19ea73ec76bfc2
+
+###
+PUT http://localhost:5000/api/orders/642edd1e7c19ea73ec76bfc2
+Content-Type: application/json
+
+{
+  "userId": "642b1a295d7254ca6a19e91f",
+  "productId": [
+    "64246a3e588b4733b4778ee3"
+  ],
+  "status": "completed",
+  "paypalPayment": {
+    "name": "123"
+  }
+}
+
+###
+DELETE http://localhost:5000/api/orders/642edd1e7c19ea73ec76bfc2

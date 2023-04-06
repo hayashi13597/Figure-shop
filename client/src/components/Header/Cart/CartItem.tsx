@@ -3,11 +3,15 @@ import formatter from "../../../utils/formatter";
 import { AiOutlineClose } from "react-icons/ai";
 import { removeItem } from "./cartSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 interface IData {
-  id: number;
-  category: string;
-  image: string[];
+  _id: number;
+  categoryId: {
+    name: string;
+    _id: string;
+  };
+  image: string;
   name: string;
   price: number;
   createdAt: string;
@@ -16,7 +20,7 @@ interface IData {
 }
 
 const CartItem: React.FC<{ props: IData }> = ({ props }) => {
-  const { id, image, name, price, quantity } = props;
+  const { _id, image, name, price, quantity } = props;
 
   const dispatch = useDispatch();
 
@@ -27,13 +31,13 @@ const CartItem: React.FC<{ props: IData }> = ({ props }) => {
   return (
     <tr className="mini-cart__item">
       <td className="mini-cart__left">
-        <a href="#">
-          <img src={`/src/assets/images/${image[0]}`} />
-        </a>
+        <Link to={`/detail/${_id}`}>
+          <img src={image} />
+        </Link>
       </td>
       <td className="mini-cart__right">
         <p className="mini-cart__title">
-          <a href="#">{name}</a>
+          <Link to={`/detail/${_id}`}>{name}</Link>
         </p>
         <div className="mini-cart__quantity">
           <span className="mnc-value">{quantity}</span>

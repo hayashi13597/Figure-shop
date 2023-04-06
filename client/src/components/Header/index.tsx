@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { BiSearch } from "react-icons/bi";
 import aiko1 from "../../assets/images/ako_1.jpg";
