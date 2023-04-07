@@ -42,7 +42,7 @@ const OrderTable = () => {
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {getOrders && getOrders.map((order) => (
+          {getOrders && getOrders.map((order: any) => (
             <Table.Row
               key={order._id}
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -51,7 +51,7 @@ const OrderTable = () => {
               <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">
                 {order.paypalPayment.purchase_units[0].shipping.name.full_name}
               </Table.Cell>
-              <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white w-2/5">{order.productId.map(item => (<li key={item._id}>{item.name}</li>))}</Table.Cell>
+              <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white w-2/5">{order.productId.map((item: any) => (<li key={item._id}>{item.name}</li>))}</Table.Cell>
               <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">{formatter.format(Math.round(order.paypalPayment.purchase_units[0].amount.value * 23452))}đ</Table.Cell>
               <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">
                 {order.paypalPayment.status === 'COMPLETED' && 'Hoàn thành'}

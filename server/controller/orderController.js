@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const User = require('../models/User');
 
 const orderController = {
   createOrder: async (req, res) => {
@@ -28,7 +29,12 @@ const orderController = {
   },
   getOrder: async (req, res) => {
     try {
-      const order = await Order.findById(req.params.id);
+      const user = await User.findById(req.params.id)
+      const order = await Order.find({
+        userId: {
+          _id: user._id
+        }
+      }).populate('productId');
       res.status(200).json(order);
     } catch (err) {
       return res.status(500).json(err);

@@ -43,9 +43,9 @@ const Dashboard = () => {
           className="bg-[#D9D9D9] h-screen md:block shadow-xl px-3 w-1/5 overflow-x-hidden transition-transform duration-300 ease-in-out"
         >
           <div className="space-y-6 md:space-y-10 mt-10">
-            <h1 className="hidden md:block font-bold text-sm md:text-xl text-center">
+            <Link to='/' className="hidden md:block font-bold text-sm md:text-xl text-center">
               Figure Shop<span className="text-teal-600"></span>
-            </h1>
+            </Link>
             <div id="profile" className="space-y-3">
               <img
                 src="https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
