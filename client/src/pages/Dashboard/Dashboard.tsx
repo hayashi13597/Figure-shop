@@ -8,6 +8,7 @@ import { FaCaretUp, FaUsers, FaExchangeAlt, FaShopify, FaCubes, FaBox } from 're
 import axios from "axios";
 import { Table } from "flowbite-react";
 import formatter from "../../utils/formatter";
+import Chart from "./chart";
 
 interface IOrder {
   createdAt: string;
@@ -28,7 +29,7 @@ const Dashboard = () => {
   const user = useSelector((state: any) => state.authLogin.user);
   const [getOrders, setGetOrders] = useState < IOrder[] > ([])
   const [getProduct, setGetProduct] = useState([])
-  const [category, setCategory] = useState([])
+  const [categories, setCategories] = useState([])
   const [total, setTotal] = useState(0);
   const [userTotal, setUserTotal] = useState([]);
 
@@ -62,7 +63,7 @@ const Dashboard = () => {
     const fetchCate = async () => {
       const res = await axios.get("http://localhost:5000/api/categories");
       const data = res.data.categories;
-      setCategory(data);
+      setCategories(data);
     }
     fetchCate();
   }, []);
@@ -145,7 +146,7 @@ const Dashboard = () => {
               </div>
               <div className="flex-1 text-right md:text-center">
                 <h2 className="font-bold uppercase text-gray-600 text-xl">Tổng danh mục</h2>
-                <p className="font-bold text-3xl">{category.length}</p>
+                <p className="font-bold text-3xl">{categories.length}</p>
               </div>
             </div>
           </div>
@@ -239,6 +240,10 @@ const Dashboard = () => {
             </Table.Body>
           </Table>
         </div>
+      </div>
+      <div className="bg-white mt-5 rounded-lg p-5">
+        <h3 className="text-center font-bold">Thống kế doanh thu 4 tháng gần đây</h3>
+        <Chart />
       </div>
     </div>
   );
