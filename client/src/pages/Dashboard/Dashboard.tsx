@@ -8,7 +8,7 @@ import { FaCaretUp, FaUsers, FaExchangeAlt, FaShopify, FaCubes, FaBox } from 're
 import axios from "axios";
 import { Table } from "flowbite-react";
 import formatter from "../../utils/formatter";
-import Chart from "./chart";
+import Chart from "./Chart";
 
 interface IOrder {
   createdAt: string;
