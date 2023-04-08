@@ -13,7 +13,7 @@ import { FaReceipt } from "react-icons/fa";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: any) => state.authLogin.user);
+  const user = useSelector((state) => state.authLogin.user);
 
   useEffect(() => {
     dispatch(loadUser());
@@ -40,7 +40,7 @@ const Dashboard = () => {
       >
         <div
           id="sidebar"
-          className="bg-[#D9D9D9] h-screen md:block shadow-xl px-3 w-1/5 overflow-x-hidden transition-transform duration-300 ease-in-out"
+          className="bg-[#D9D9D9] fixed top-0 left-0 bottom-0 z-[999] md:block shadow-xl px-3 w-1/6 overflow-x-hidden transition-transform duration-300 ease-in-out"
         >
           <div className="space-y-6 md:space-y-10 mt-10">
             <Link to='/' className="hidden md:block font-bold text-sm md:text-xl text-center">
@@ -127,12 +127,14 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="w-full bg-slate-200">
-          <div className="w-full h-14 bg-[#D9D9D9] flex items-center justify-end">
+        <div className="w-1/6 h-screen"></div>
+        <div className="w-5/6 bg-slate-200">
+          <div className="fixed top-0 left-0 right-0 z-[500] h-14 bg-[#D9D9D9] flex items-center justify-end">
             <Link to="/" onClick={handleLogout}>
               <FiLogOut className="text-5xl bg-slate-500 p-3 mr-10 hover:bg-[#242526] hover:text-white transition duration-150 ease-in-out" />
             </Link>
           </div>
+          <div className="w-full h-14"></div>
           <Outlet />
         </div>
       </div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
 import bxUser from "../../../assets/images/bx-user.svg";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { loginAsync, logoutAsync } from './loginSlice';
 import { useDispatch, useSelector } from "react-redux";
-import { loadUser, updateLogin } from "../../../slice/authSlice";
+import { loadUser } from "../../../slice/authSlice";
 import { Avatar, Dropdown, Table } from "flowbite-react";
 import * as Toastify from '../../../utils/toastify'
 import axios from "axios";
@@ -17,8 +17,8 @@ const LoginComponent: React.FC<{ showLogin: boolean, handleShowLogin: () => void
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false)
   const [getOrders, setGetOrders] = useState([])
-  const user = useSelector((state) => state.authLogin.user);
-  const isAuthenticated = useSelector((state) => state.authLogin.isAuthenticated);
+  const user = useSelector((state:any) => state.authLogin.user);
+  const isAuthenticated = useSelector((state:any) => state.authLogin.isAuthenticated);
 
   useEffect(() => {
     dispatch(loadUser());
@@ -200,7 +200,7 @@ const LoginComponent: React.FC<{ showLogin: boolean, handleShowLogin: () => void
                     <Table.HeadCell>Trạng thái</Table.HeadCell>
                   </Table.Head>
                   <Table.Body className="divide-y">
-                    {getOrders && getOrders.map((order) => (
+                    {getOrders && getOrders.map((order:any) => (
                       <Table.Row
                         key={order._id}
                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -208,7 +208,7 @@ const LoginComponent: React.FC<{ showLogin: boolean, handleShowLogin: () => void
                         <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">
                           {order.paypalPayment.purchase_units[0].shipping.name.full_name}
                         </Table.Cell>
-                        <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white w-2/5">{order.productId.map((item) => (<li key={item._id}>{item.name}</li>))}</Table.Cell>
+                        <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white w-2/5">{order.productId.map((item:any) => (<li key={item._id}>{item.name}</li>))}</Table.Cell>
                         <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">{formatter.format(Math.round(order.paypalPayment.purchase_units[0].amount.value * 23452))}đ</Table.Cell>
                         <Table.Cell className="whitespace-wrap font-medium text-gray-900 dark:text-white">
                           {order.paypalPayment.status === 'COMPLETED' && 'Hoàn thành'}
