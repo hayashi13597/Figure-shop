@@ -2,6 +2,7 @@
 # Mô tả
 - Xây dựng website bán mô hình nhân vật anime của nhật bản
 - Clone từ website [Japan Figure](https://japanfigure.vn/)
+- Website không có responsive.
 # Các công nghệ sử dung:
 - Front-end: HTML, CSS, Typescript, React.JS
 - Back-end: Node.JS (Express), MongoDB
